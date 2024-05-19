@@ -1,9 +1,12 @@
 package Basics;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class Commands {
 	public void verifySwagLabsLogin()
@@ -114,6 +117,173 @@ public class Commands {
 		loginbutton.click();
 		driver.close();
 	}
+	public void verifyisSelected()
+	{
+		boolean isbuttonselected;
+		WebDriver driver= new ChromeDriver();
+		driver.get("https:https://demowebshop.tricentis.com/register");
+		driver.manage().window().maximize();
+		WebElement radiobuttonfemale=driver.findElement(By.xpath("//input[@id='gender-female'"));
+		isbuttonselected=radiobuttonfemale.isSelected();
+		System.out.println(" female element before selected : "+isbuttonselected);
+		radiobuttonfemale.click();
+		isbuttonselected=radiobuttonfemale.isSelected();
+		System.out.println("Female element after selected :  "+isbuttonselected);
+		driver.close();
+		
+		
+		
+	}
+	public void verifyisEnabled()
+	{
+		
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://demowebshop.tricentis.com/");
+		driver.manage().window().maximize();
+		WebElement subscribe=driver.findElement(By.id("newsletter-subscribe-button"));
+		subscribe.click();
+		boolean issubscribe=subscribe.isEnabled();
+		System.out.println(" Button is enabled  "+issubscribe);
+		driver.close();
+		
+	}
+	public void verifyisDisplayed()
+	{
+		
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://demowebshop.tricentis.com/");
+		driver.manage().window().maximize();
+		WebElement vote=driver.findElement(By.id("vote-poll-1"));
+		vote.click();
+		boolean isdisplayed=vote.isDisplayed();
+		System.out.println("Button is Displayed  "+isdisplayed);
+		driver.close();
+		
+	}
+	public void verifyValuesFromDropDown()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/newtours/register.php");
+		driver.manage().window().maximize();
+		WebElement countrylist=driver.findElement(By.xpath("//select[@name='country']"));
+		Select select=new Select(countrylist);
+		//select.selectByVisibleText("ANDORRA");        // select element using visible text
+		select.selectByIndex(1);						//select element using index position
+		//select.selectByValue("AZERBAIJAN");			//select element using text value
+		WebElement getCountryName=select.getFirstSelectedOption();
+		System.out.println(getCountryName.getText());			// to print selected element in sonsole
+		
+		driver.close();
+		
+	}
+	public void getTotalDropDownValues()
+	{
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/newtours/register.php");
+		driver.manage().window().maximize();
+		WebElement countryList=driver.findElement(By.xpath("//select[@name='country']"));
+		Select select=new Select(countryList);
+		List<WebElement> dropdownlist=select.getOptions();
+		System.out.println("Total number of values in drop down list :  "+dropdownlist.size());
+		driver.close();
+	}
+	public void verifySingleInputField()
+	{
+		WebDriver driver= new ChromeDriver();
+		driver.get("https:/https/selenium.qabible.in/simple-form-demo.php");
+		driver.manage().window().maximize();
+		
+		WebElement enterMessageField=driver.findElement(By.xpath("//input[@id='single-input-field']"));
+		enterMessageField.sendKeys("SINGLE INPUT FIELD MESSAGE");
+		WebElement showMessageButton=driver.findElement(By.xpath("//button[@id='button-one']"));
+		showMessageButton.click();
+		
+		driver.close();
+	}
+	public void verifyTwoInputFields()
+	{
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://selenium.qabible.in/simple-form-demo.php");
+		driver.manage().window().maximize();
+		
+		WebElement enterValueAField=driver.findElement(By.xpath("//input[@id='value-a']"));
+		enterValueAField.sendKeys("10");
+		WebElement enterValueBField=driver.findElement(By.xpath("//input[@id='value-b']"));
+		enterValueBField.sendKeys("20");
+		
+		WebElement getTotalButton=driver.findElement(By.xpath("//button[@id='button-two']"));
+		getTotalButton.click();
+		
+		WebElement viewTotalField=driver.findElement(By.xpath("//div[@id='message-two']"));
+		String st=viewTotalField.getText();
+		System.out.println(st);
+		
+		driver.close();
+		
+	}
+	public void verifyCheckBoxDemo()
+	{
+		boolean cb;
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://selenium.qabible.in/check-box-demo.php");
+		driver.manage().window().maximize();
+		
+		WebElement checkbox=driver.findElement(By.xpath("//input[@id='gridCheck']"));
+		cb=checkbox.isSelected();
+		System.out.println(" CHECK BOX SELECTION STATUS BEFORE SELECTED :  "+cb);
+		checkbox.click();
+		cb=checkbox.isSelected();
+		System.out.println(" CHECK BOX SELECTION STATUS AFTER SELECTED :  "+cb);
+		
+		WebElement showcheck=driver.findElement(By.xpath("//div[@id='message-one']"));
+		String str=showcheck.getText();
+		System.out.println("Check Box Selection Status:  "+str);
+		
+		driver.close();
+	}
+	public void verifyRadioButtonDemo()
+	{
+		boolean rb;
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://selenium.qabible.in/radio-button-demo.php");
+		driver.manage().window().maximize();
+		
+		WebElement radiobutton=driver.findElement(By.xpath("//input[@id='inlineRadio1']"));
+		rb=radiobutton.isSelected();
+		System.out.println("RADIO BUTTON SELECTION STATUS BEFORE SELECTED :  "+rb);
+		radiobutton.click();
+		rb=radiobutton.isSelected();
+		System.out.println("RADIO BUTTON SELECTION STATUS AFTER SELECTED:  "+rb);
+		
+		WebElement showselectedvaluebutton=driver.findElement(By.xpath("//button[@id='button-one']"));
+		showselectedvaluebutton.click();
+		
+		WebElement radiotext=driver.findElement(By.xpath("//div[@id='message-one']"));
+		String str=radiotext.getText();
+		System.out.println(str);
+		
+		driver.close();
+	}
+	
+	public void verifyColorDropDown()
+	{
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://selenium.qabible.in/select-input.php");
+		driver.manage().window().maximize();
+		
+	    WebElement selectcolorfield=driver.findElement(By.xpath("//select[@id='single-input-field']"));
+	    Select select=new Select(selectcolorfield);
+	    //select.selectByIndex(2);
+	   // select.selectByVisibleText("Red");
+	    select.selectByValue("Yellow");
+	    
+	    WebElement selectedcolor=select.getFirstSelectedOption();
+	    String str=selectedcolor.getText();
+	    System.out.println(str);
+	    
+	    driver.close();
+	    
+	}
 	public static void main(String[] args) {
 		Commands obj = new Commands();
 		//obj.verifySwagLabsLogin();
@@ -122,7 +292,18 @@ public class Commands {
 		//obj.verifyPartialLinkText();
 		//obj.verifyDemoTourRegistration();
 		//obj.demoWebShopLoginXpath();
-		obj.demoWebShopLogincssSelector();
+		//obj.demoWebShopLogincssSelector();
+		//obj.verifyisSelected();
+		//obj.verifyisEnabled();
+		//obj.verifyisDisplayed();
+		//obj.verifyValuesFromDropDown();
+		//obj.getTotalDropDownValues();
+		//obj.verifySingleInputField();
+		//obj.verifyTwoInputFields();
+		//obj.verifyCheckBoxDemo();
+		//obj.verifyRadioButtonDemo();
+		obj.verifyColorDropDown();
+		
 	
 
 	}
