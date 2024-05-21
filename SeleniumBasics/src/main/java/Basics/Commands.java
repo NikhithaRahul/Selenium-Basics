@@ -1,5 +1,6 @@
 package Basics;
 
+import java.awt.Desktop.Action;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -7,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class Commands {
@@ -325,12 +327,12 @@ public class Commands {
 		clickbutton.click();
 		Alert alert=driver.switchTo().alert();
 		String str=alert.getText();
-		System.out.println(str);
+		System.out.println("Message in the alert box :  "+str);
 		alert.sendKeys("Nikhitha");
 		alert.accept();
 		WebElement textmessage=driver.findElement(By.xpath("//span[@id='promptResult']"));
 		String st=textmessage.getText();
-		System.out.println(st);
+		System.out.println("After clicking ok button text message is  "+st);
 		driver.close();
 	}
 	
@@ -343,7 +345,7 @@ public class Commands {
 		customeridtextfield.sendKeys("Nikhitha");
 		WebElement submitbutton=driver.findElement(By.xpath("//input[@name='submit']"));
 		submitbutton.click();
-		Alert alert= driver.switchTo().alert();
+		Alert alert= driver.switchTo().alert();	//switching to alert window
 		String str=alert.getText();
 		System.out.println("Message displayed in Alert Message:  "+str);
 		alert.accept();
@@ -352,6 +354,69 @@ public class Commands {
 		alert.accept();
 		driver.close();
 	}
+	public void verifyRightClick()
+	{
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		driver.manage().window().maximize();
+		WebElement rightclick=driver.findElement(By.xpath("//span[@class='context-menu-one btn btn-neutral']"));
+		Actions actions= new Actions(driver);
+		actions.contextClick(rightclick).build().perform();
+		
+		driver.close();
+		}
+	public void verifyDoubleClick()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		driver.manage().window().maximize();
+		
+		WebElement doubleclick=driver.findElement(By.xpath("//button[text()='Double-Click Me To See Alert']"));
+		Actions action=new Actions(driver);
+		action.doubleClick(doubleclick).build().perform();
+		
+		Alert alert=driver.switchTo().alert();
+		String str=alert.getText();
+		System.out.println("Text in alert box : "+str);
+		alert.accept();
+		driver.close();
+	}
+	public void verifyDragAndDrop()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demoqa.com/droppable");
+		driver.manage().window().maximize();
+		
+		WebElement dragme=driver.findElement(By.xpath("//div[@id='draggable']"));
+		
+		WebElement drop=driver.findElement(By.xpath("//div[@id='droppableExample-tabpane-simple']//div[@id='droppable']"));
+		Actions action=new Actions(driver);
+		action.dragAndDrop(dragme, drop).build().perform();
+		driver.close();
+	}
+		public void verifyDragAndDropOffset()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.get("https://demoqa.com/dragabble");
+			driver.manage().window().maximize();
+			WebElement dragbutton=driver.findElement(By.xpath("//div[@id='dragBox']"));
+			Actions actions=new Actions(driver);
+			actions.dragAndDropBy(dragbutton,50,100).build().perform();
+			driver.close();
+		}
+		public void verifyMouseOver()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.get("https://demoqa.com/menu/");
+			driver.manage().window().maximize();
+			WebElement mainitemtwo=driver.findElement(By.cssSelector("#nav > li:nth-child(2) > a"));
+			Actions actions=new Actions(driver);
+			actions.moveToElement(mainitemtwo).build().perform();
+			WebElement subsublist=driver.findElement(By.xpath("//*[@id=\"nav\"]/li[2]/ul/li[3]/a"));		
+			actions.moveToElement(subsublist).build().perform();
+			driver.close();
+			
+		}
 	public static void main(String[] args) {
 		Commands obj = new Commands();
 		//obj.verifySwagLabsLogin();
@@ -374,7 +439,12 @@ public class Commands {
 		//obj.verifySimpleAlert();
 		//obj.verifyConfirmationAlert();
 		//obj.verifyPromptAlert();
-		obj.verifyCustomerDeletAlert();
+	    //obj.verifyCustomerDeletAlert();
+		//obj.verifyRightClick();
+		//obj.verifyDoubleClick();
+		//obj.verifyDragAndDrop();
+		//obj.verifyDragAndDropOffset();
+		obj.verifyMouseOver();
 	
 
 	}
