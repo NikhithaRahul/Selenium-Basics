@@ -417,6 +417,42 @@ public class Commands {
 			driver.close();
 			
 		}
+		public void verifyFileUpload()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.get("https://demo.guru99.com/test/upload/");
+			driver.manage().window().maximize();
+			
+			WebElement choosefilebutton=driver.findElement(By.xpath("//input[@id='uploadfile_0']"));
+			choosefilebutton.sendKeys("C:\\Users\\DELL\\git\\Selenium-Basics\\SeleniumBasics\\src\\main\\resources\\Automation.docx");
+			
+			WebElement checkbox=driver.findElement(By.xpath("//input[@id='terms']"));
+			checkbox.click();
+			WebElement submitfilebutton=driver.findElement(By.xpath("//button[@id='submitbutton']"));
+			submitfilebutton.click();
+			driver.close();
+		}
+		
+		public void verifyDragDrop()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.get("https://selenium.qabible.in/drag-drop.php");
+			driver.manage().window().maximize();
+			
+			WebElement dragfield1=driver.findElement(By.xpath("//span[text()='Draggable n°1']"));
+			WebElement dragfield2=driver.findElement(By.xpath("//span[text()='Draggable n°2']"));
+			WebElement dragfield3=driver.findElement(By.xpath("//span[text()='Draggable n°3']"));
+			WebElement dragfield4=driver.findElement(By.xpath("//span[text()='Draggable n°4']"));
+			
+			WebElement dropfield=driver.findElement(By.xpath("//div[@id='mydropzone']"));
+			Actions actions=new Actions(driver);
+			actions.dragAndDrop(dragfield1, dropfield).build().perform();
+			actions.dragAndDrop(dragfield2, dropfield).build().perform();
+			actions.dragAndDrop(dragfield3, dropfield).build().perform();
+			actions.dragAndDrop(dragfield4, dropfield).build().perform();
+			
+			driver.close();
+		}
 	public static void main(String[] args) {
 		Commands obj = new Commands();
 		//obj.verifySwagLabsLogin();
@@ -444,7 +480,9 @@ public class Commands {
 		//obj.verifyDoubleClick();
 		//obj.verifyDragAndDrop();
 		//obj.verifyDragAndDropOffset();
-		obj.verifyMouseOver();
+		//obj.verifyMouseOver();
+		//obj.verifyFileUpload();
+		obj.verifyDragDrop();
 	
 
 	}
