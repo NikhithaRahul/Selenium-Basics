@@ -11,6 +11,7 @@ public class FirefoxNavigation {
 		driver.manage().window().maximize();
 		driver.navigate().back();
 		driver.navigate().forward();
+		driver.navigate().refresh();
 		driver.navigate().to("https://www.selenium.dev/");
 		driver.close();
 

@@ -1,11 +1,15 @@
 package Basics;
 
+import java.util.List;
+import java.util.Set;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 public class SeleniumPractice {
 	
@@ -86,6 +90,133 @@ public class SeleniumPractice {
 		submitbutton.click();
 		driver.close();
 	}
+	public void verifyMultipleWindowHandles()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://webdriveruniversity.com/");
+		driver.manage().window().maximize();
+		String title=driver.getTitle();
+		System.out.println("Parent Window Title  :  "+ title);
+		System.out.println("--------------------------------------------------");
+		String parentwindowhandle=driver.getWindowHandle();
+		System.out.println("Parent Window HandleID :  "+parentwindowhandle);
+		Set<String> multiplehandleid=driver.getWindowHandles();
+		System.out.println("Multiple HandleIDs :  "+multiplehandleid);
+		WebElement loginportal=driver.findElement(By.xpath("//h1[text()='BUTTON CLICKS']"));
+		loginportal.click();
+		
+		
+		driver.close();
+	}
+	public void verifyDropDown()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/newtours/register.php");
+		driver.manage().window().maximize();
+		WebElement countryname=driver.findElement(By.xpath("//select[@name='country']"));
+		Select select=new Select(countryname);
+		select.selectByVisibleText("ANGOLA");
+		WebElement country=select.getFirstSelectedOption();
+		System.out.println("Selected  Country  :  "+country.getText());
+		driver.close();
+	}
+	public void verifyTotalDropDownValues()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/newtours/register.php");
+		driver.manage().window().maximize();
+		WebElement countryname=driver.findElement(By.xpath("//select[@name='country']"));
+		Select select=new Select(countryname);
+		List<WebElement> totalcountry=select.getOptions();
+		System.out.println("Total country:  "+totalcountry.size());
+		driver.close();
+		
+	}
+	public void verifySimpleAlert()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demoqa.com/alerts");
+		driver.manage().window().maximize();
+		WebElement clickherebutton=driver.findElement(By.xpath("//button[@id='alertButton']"));
+		clickherebutton.click();
+		Alert alert=driver.switchTo().alert();
+		String text=alert.getText();
+		System.out.println("Text in alert box:  "+text);
+		alert.accept();
+		driver.close();
+		
+	}
+	public void verifyConfirmationAlert()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demoqa.com/alerts");
+		driver.manage().window().maximize();
+		WebElement clickherebutton=driver.findElement(By.xpath("//button[@id='confirmButton']"));
+		clickherebutton.click();
+		Alert alert=driver.switchTo().alert();
+		String alerttext=alert.getText();
+		System.out.println("Text in Alert Box :  "+alerttext);
+		alert.dismiss();
+		WebElement confirmmessage=driver.findElement(By.xpath("//span[@id='confirmResult']"));
+		String text=confirmmessage.getText();
+		System.out.println("Confirmation Message is :  "+text);
+		driver.close();
+	}
+	public void verifyPromptAlert()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demoqa.com/alerts");
+		driver.manage().window().maximize();
+		WebElement clickhere=driver.findElement(By.xpath("//button[@id='promtButton']"));
+		clickhere.click();
+		Alert alert=driver.switchTo().alert();
+		alert.sendKeys("Nikhitha");
+		alert.accept();
+		driver.close();
+	}
+	public void verifyRightClickPrgm()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		driver.manage().window().maximize();
+		WebElement rightclickme=driver.findElement(By.xpath("//span[text()='right click me']"));
+		Actions actions=new Actions(driver);
+		actions.contextClick(rightclickme).build().perform();
+		driver.close();
+		
+	}
+	public void verifyDoubleClickPrgm()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		driver.manage().window().maximize();
+		WebElement doubleclick=driver.findElement(By.xpath("//button[text()='Double-Click Me To See Alert']"));
+		Actions actions=new Actions(driver);
+		actions.doubleClick(doubleclick).build().perform();
+		Alert alert=driver.switchTo().alert();
+		alert.accept();
+		driver.close();
+	}
+	public void verifyDragandDropPrgm()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demoqa.com/droppable");
+		driver.manage().window().maximize();
+		WebElement dragme=driver.findElement(By.xpath("//div[@id='draggable']"));
+		WebElement dropme=driver.findElement(By.xpath("//div[@id='droppableExample-tabpane-simple']//div[@class='drop-box ui-droppable']"));
+		Actions action=new Actions(driver);
+		action.dragAndDrop(dragme, dropme).build().perform();
+		driver.close();
+	}
+	public void verifyNumberofFrames()
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://demoqa.com/frames");
+		driver.manage().window().maximize();
+		List<WebElement> iframeno=driver.findElements(By.tagName("iframe"));
+		int number=iframeno.size();
+		System.out.println("Number of frames:  "+number);
+	}
 	public static void main(String[] args) {
 		SeleniumPractice obj=new SeleniumPractice();
 		//obj.xpathPractice();
@@ -93,7 +224,17 @@ public class SeleniumPractice {
 		//obj.verifyRightClick();
 		//obj.verifyDoubleClick();
 		//obj.verifyDragAndDrop();
-		obj.fileUpload();
+		//obj.fileUpload();
+		//obj.verifyMultipleWindowHandles();
+		//obj.verifyDropDown();
+		//obj.verifyTotalDropDownValues();
+		//obj.verifySimpleAlert();
+		//obj.verifyConfirmationAlert();
+		//obj.verifyPromptAlert();
+		//obj.verifyRightClickPrgm();
+		//obj.verifyDoubleClickPrgm();
+		//obj.verifyDragandDropPrgm();
+		obj.verifyNumberofFrames();
 	}
 
 }

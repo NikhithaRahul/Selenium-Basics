@@ -1,7 +1,11 @@
 package Basics;
 
 import java.awt.Desktop.Action;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -133,8 +137,7 @@ public class Commands {
 		isbuttonselected=radiobuttonfemale.isSelected();
 		System.out.println("Female element after selected :  "+isbuttonselected);
 		driver.close();
-		
-		
+				
 		
 	}
 	public void verifyisEnabled()
@@ -276,8 +279,8 @@ public class Commands {
 		
 	    WebElement selectcolorfield=driver.findElement(By.xpath("//select[@id='single-input-field']"));
 	    Select select=new Select(selectcolorfield);
-	    select.selectByIndex(2);
-	    select.selectByVisibleText("Red");
+	    //select.selectByIndex(2);
+	   // select.selectByVisibleText("Red");
 	    select.selectByValue("Yellow");
 	    
 	    WebElement selectedcolor=select.getFirstSelectedOption();
@@ -453,6 +456,123 @@ public class Commands {
 			
 			driver.close();
 		}
+		public void verifyFrames()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.get("https://demoqa.com/frames");
+			driver.manage().window().maximize();
+			List<WebElement> iframetags=driver.findElements(By.tagName("iframe"));
+			int sizenumberoftags=iframetags.size();
+			System.out.println("Number of iframes:  "+sizenumberoftags);
+			
+			//driver.switchTo().frame(2);
+			//driver.switchTo().frame("frame1");
+			WebElement frame1 =driver.findElement(By.xpath("//iframe[@id='frame1']"));
+			driver.switchTo().frame(frame1);		//switch to frame from a webpage
+			WebElement frametext=driver.findElement(By.xpath("//h1[@id='sampleHeading']"));
+			String str=frametext.getText();
+			System.out.println("Text message in Frame1:  "+str);
+			driver.switchTo().defaultContent();			// switch to web page from frame
+			driver.close();
+		}
+		
+		public void verifyFramePractice()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.get("https://www.hyrtutorials.com/p/frames-practice.html#google_vignette");
+			driver.manage().window().maximize();
+			WebElement textbox=driver.findElement(By.xpath("//input[@id='name']"));
+			textbox.sendKeys("Nikhitha");
+			//		FRAME 1
+			driver.switchTo().frame("frm1");
+			WebElement coursenamedropdown=driver.findElement(By.id("course"));
+			Select select=new Select(coursenamedropdown);
+			select.selectByIndex(3);
+			WebElement selectedoption=select.getFirstSelectedOption();
+			String option=selectedoption.getText();
+			System.out.println("Selected option from dropdown menu is :  "+option);
+			WebElement textinframe1=driver.findElement(By.xpath("//h1[@class='post-title entry-title']"));
+			String str=textinframe1.getText();
+			System.out.println("Text in frame1 : "+str);
+			driver.switchTo().defaultContent();
+			//			FRAME 2
+			driver.switchTo().frame("frm2");
+			WebElement frame2text=driver.findElement(By.xpath("//div[@class='post-head']//h1[@class='post-title entry-title']"));
+			String text2=frame2text.getText();
+			System.out.println("text in frame 2 : "+text2);
+			WebElement basiccontroldropdown=driver.findElement(By.id("selectnav1"));
+			Select selectobj=new Select(basiccontroldropdown);
+			selectobj.selectByIndex(1);
+			WebElement selectedbasiccontrol=selectobj.getFirstSelectedOption();
+			String text=selectedbasiccontrol.getText();
+			System.out.println("Selected option from basic control dropdown in frame 2 :  "+text);
+		/*WebElement firstnamefield=driver.findElement(By.xpath("//*[@id=\"firstName\"]"));
+			//firstnamefield.sendKeys("Nikhitha");
+			WebElement lastnamefield=driver.findElement(By.xpath("//input[@id='lastName']"));
+			lastnamefield.sendKeys("Rahul");
+			WebElement genderselect=driver.findElement(By.xpath("//input[@id='femalerb']"));
+			genderselect.click();
+			WebElement languageknown=driver.findElement(By.xpath("//input[@id='englishchbx']"));
+			languageknown.click();
+			WebElement emailfield=driver.findElement(By.xpath("//input[@id='email']"));
+			emailfield.sendKeys("nikhitha@gmail.com");*/
+			driver.switchTo().defaultContent();
+			
+			//		FRAME 3
+			driver.switchTo().frame("frm3");
+			//WebElement frame3textbox=driver.findElement(By.xpath("//input[@id='name']"));
+			//frame3textbox.sendKeys("Niveditha");
+			
+			WebElement basiccontrldropdwn=driver.findElement(By.xpath("//select[@id='selectnav1']"));
+			Select basic=new Select(basiccontrldropdwn);
+			basic.selectByIndex(3);
+			WebElement basiccontrol=basic.getFirstSelectedOption();
+			String basiccontroltext=basiccontrol.getText();
+			System.out.println("Selected option from basic control dropdown in frame 3 :  "+basiccontroltext);
+			
+						
+			driver.close();
+	
+		}
+		public void verifyMultipleWindowHandling()
+		{
+			WebDriver driver= new ChromeDriver();
+			driver.get("https://demo.guru99.com/popup.php");
+			driver.manage().window().maximize();
+			String parentwindowid=driver.getWindowHandle();
+			System.out.println("Parent Window Handle ID:  "+parentwindowid);
+			WebElement clickherebutton=driver.findElement(By.xpath("//a[text()='Click Here']"));
+			clickherebutton.click();
+			Set<String > multiplehandleid=driver.getWindowHandles();
+			System.out.println("Handle ID s : "+multiplehandleid);
+			Iterator<String> values = multiplehandleid.iterator();
+			while(values.hasNext())
+			{
+				String handleid=values.next();
+						if(!handleid.equals(parentwindowid))
+								{
+								driver.switchTo().window(handleid);
+								WebElement emailfield=driver.findElement(By.xpath("//input[@name='emailid']"));
+								emailfield.sendKeys("nikhitha@gmail.com");
+								WebElement submitbutton=driver.findElement(By.xpath("//input[@name='btnLogin']"));
+								submitbutton.click();
+								//driver.close();							
+								}
+						
+					
+				
+				
+			}
+			driver.quit();
+			//driver.switchTo().defaultContent();
+		}
+		public void sample()
+		{
+			WebDriver driver=new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.get("https://demo.guru99.com/popup.php");
+		}
+		
 	public static void main(String[] args) {
 		Commands obj = new Commands();
 		//obj.verifySwagLabsLogin();
@@ -482,8 +602,12 @@ public class Commands {
 		//obj.verifyDragAndDropOffset();
 		//obj.verifyMouseOver();
 		//obj.verifyFileUpload();
-		obj.verifyDragDrop();
-	
+		//obj.verifyDragDrop();
+		//obj.verifyFrames();
+		
+		//obj.verifyFramePractice();
+		//obj.verifyMultipleWindowHandling();
+	//obj.sample();
 
 	}
 
