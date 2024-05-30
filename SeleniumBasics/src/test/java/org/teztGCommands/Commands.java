@@ -1,6 +1,13 @@
 package org.teztGCommands;
 
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -77,6 +84,62 @@ public class Commands extends BrowserLaunch
 		WebElement votebutton=driver.findElement(By.xpath("//input[@id='vote-poll-1']"));
 		boolean vote=votebutton.isDisplayed();
 		Assert.assertTrue(vote, "VoteButton not Displayed");
+		
+	}
+	@Test
+	public void verifyJavaScriptExecutorSendKeysClick()
+	{
+		driver.get("https://demowebshop.tricentis.com/");
+		JavascriptExecutor js=(JavascriptExecutor)driver;  //for creating reference of javascriptexecutor
+		js.executeScript("document.getElementById(\"newsletter-email\").value='nikhitha@gmail.com'");  // for Sendkeys
+		js.executeScript("document.getElementById(\"newsletter-subscribe-button\").click()");
+	}
+	@Test
+	public void verifyJavaScriptVerticalScroll()
+	{
+		driver.get("https://demowebshop.tricentis.com/login");
+		JavascriptExecutor js=(JavascriptExecutor)driver;		//for creating reference of javascriptexecutor
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");			// For Scroll
+	}
+	@Test
+	public void verifyKeyBoardEvents() throws AWTException
+	{
+		driver.get("https://demowebshop.tricentis.com/login");
+		Robot robot=new Robot();
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_T);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.keyRelease(KeyEvent.VK_T);
+		
+	}
+	@Test
+	public void verifyJavaScriptDemoWebShopLogin()
+	{
+		driver.get("https://demowebshop.tricentis.com/");
+		WebElement login=driver.findElement(By.xpath("//a[@class='ico-login']"));
+		login.click();
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("document.getElementById(\"Email\").value='nikhitha1992@gmail.com'");
+		js.executeScript("document.getElementById(\"Password\").value='nikhitha1111'");
+		
+		WebElement loginbutton=driver.findElement(By.xpath("//input[@class='button-1 login-button']"));
+		loginbutton.click();
+				
+	}
+	@Test
+
+	public void verifyJavaScriptScrollAlerts()
+	{
+		driver.get("https://demoqa.com/alerts");
+		JavascriptExecutor js=(JavascriptExecutor)driver;	
+		js.executeScript("window.scrollTo(0,500)");
+		js.executeScript("document.getElementById(\"promtButton\").click()");
+		Alert alert=driver.switchTo().alert();
+		alert.sendKeys("Nikhitha");
+		alert.accept();
+		WebElement resulttext=driver.findElement(By.xpath("//span[@id='promptResult']"));
+		String text=resulttext.getText();
+		System.out.println("After clicking ok button text message :   "+text);
 		
 	}
 }
