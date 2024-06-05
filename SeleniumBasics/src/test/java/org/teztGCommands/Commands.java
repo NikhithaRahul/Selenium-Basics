@@ -4,11 +4,15 @@ package org.teztGCommands;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -140,6 +144,53 @@ public class Commands extends BrowserLaunch
 		WebElement resulttext=driver.findElement(By.xpath("//span[@id='promptResult']"));
 		String text=resulttext.getText();
 		System.out.println("After clicking ok button text message :   "+text);
+		
+	}
+	@Test
+	public void verifydynamicWebTable()
+	{
+		driver.get("https://money.rediff.com/indices/nse");
+		WebElement showmore=driver.findElement(By.xpath("//a[@id='showMoreLess']"));
+		showmore.click();
+		//This line locates the table with the ID dataTable and assigns it to the dynamic table variable.
+		WebElement dynamictable=driver.findElement(By.xpath("//table[@id='dataTable']"));
+		//System.out.println(dynamictable.getText());
+		WebElement tablerow=driver.findElement(By.xpath("//table[@id='dataTable']/tbody/tr[1]"));//This finds the first row of the table and prints its text content to the console.
+		System.out.println(tablerow.getText());
+		//retrieves all the rows in the table and stores them in a list called rows. It also stores the number of rows in rowsize.
+		List<WebElement> rows=dynamictable.findElements(By.tagName("tr"));
+		int rowsize=rows.size();
+		//This loop iterates over each row. For each row, it finds all the cells (td elements) and stores them in a list called coloumn. It also stores the number of cells in coloumnsize.
+		for(int i=0;i<rowsize;i++)
+		{
+			List<WebElement> coloumn=rows.get(i).findElements(By.tagName("td")); 
+			int coloumnsize=coloumn.size();
+			for(int j=0;j<coloumnsize;j++)
+			{
+				String celltype=coloumn.get(j).getText();
+				if(celltype.equals("NIFTY NEXT 50"))
+				{
+					System.out.println("Previous close value is  "+coloumn.get(1).getText());
+				}
+			}
+		}
+		
+	}
+	@Test
+	public void verifyWaits()
+	{
+		driver.get("https://demoqa.com/alerts");
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));  //  implicit wait
+		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));   // explicit wait
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+		WebElement clickmebutton=driver.findElement(By.xpath("//button[@id='timerAlertButton']"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("timerAlertButton")));
+		
+		clickmebutton.click();
+		wait.until(ExpectedConditions.alertIsPresent());
+		Alert alert=driver.switchTo().alert();
+	    alert.accept();
 		
 	}
 }
