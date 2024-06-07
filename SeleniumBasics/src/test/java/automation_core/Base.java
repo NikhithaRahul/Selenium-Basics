@@ -1,4 +1,4 @@
-package org.teztGCommands;
+package automation_core;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +14,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class BrowserLaunch 
-{
-	WebDriver driver;				// instance variable
+public class Base {
+	protected WebDriver driver;
 	public void initialiseBrowser(String browser)
 	{
 		if(browser.equals("Chrome"))
@@ -33,20 +32,19 @@ public class BrowserLaunch
 		}
 		else
 		{
-			throw new RuntimeException("INVALID BROWSER");
+			throw new RuntimeException("Invalid Browser");
 		}
 		driver.manage().window().maximize();
-		
 	}
 	@BeforeMethod
 	public void setUp()
 	{
 		initialiseBrowser("Chrome");
-  	}
+	}
 	@AfterMethod
 	public void closeBrowser(ITestResult result) throws IOException
 	{
-		if(result.getStatus()==ITestResult.FAILURE) 		//getStatus return type int
+		if(result.getStatus()==ITestResult.FAILURE)
 		{
 			takeScreenShot(result);
 		}
@@ -54,11 +52,9 @@ public class BrowserLaunch
 	}
 	public void takeScreenShot(ITestResult result) throws IOException
 	{
-		TakesScreenshot takescreenshot=(TakesScreenshot)driver;	// create reference of TakesScreenshot class
-		File screenshot=takescreenshot.getScreenshotAs(OutputType.FILE); //FILE static final
-		FileUtils.copyFile(screenshot, new File("./ScreenShot/"+result.getName()+".png"));
-		
+		TakesScreenshot takescreenshot=(TakesScreenshot)driver;
+		File screenshot=takescreenshot.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(screenshot,new File("./Screenshot/"+result.getName()+".png"));
 	}
-	
 
 }

@@ -6,12 +6,14 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -69,7 +71,7 @@ public class Commands extends BrowserLaunch
 		loginbutton.click();
 		WebElement swaglablogo=driver.findElement(By.xpath("//div[@class='app_logo']"));
 		String actuallogotext=swaglablogo.getText();
-		String expectedlogotext="Swag Labs";
+		String expectedlogotext="SwaLabs";
 		Assert.assertEquals(actuallogotext, expectedlogotext,"Logo Mismatch");
 	}
 	@Test
@@ -191,6 +193,23 @@ public class Commands extends BrowserLaunch
 		wait.until(ExpectedConditions.alertIsPresent());
 		Alert alert=driver.switchTo().alert();
 	    alert.accept();
+		
+	}
+	@Test
+	public void verifyFleuntWait()
+	{
+		driver.get("https://demoqa.com/alerts");
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+		WebElement clickmebutton=driver.findElement(By.id("timerAlertButton"));
+		FluentWait wait=new FluentWait(driver);
+		wait.withTimeout(Duration.ofSeconds(10));
+		wait.pollingEvery(Duration.ofSeconds(2));
+		wait.ignoring(NoSuchElementException.class);
+		clickmebutton.click();
+		wait.until(ExpectedConditions.alertIsPresent());
+		Alert alert=driver.switchTo().alert();
+		alert.accept();		
 		
 	}
 }
