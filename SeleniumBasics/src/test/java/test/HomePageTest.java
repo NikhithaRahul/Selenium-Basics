@@ -1,5 +1,6 @@
 package test;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -10,36 +11,41 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import automation_core.Base;
+import utilities.ExcelUtility;
 
 public class HomePageTest extends Base
 {
 	@Test
-	public void verifyHomePageTitle()
+	public void verifyHomePageTitle() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");
 		String actualtile=driver.getTitle();
 		System.out.println("WebPage Title : "+actualtile);
-		String expectedtitle="Demo Web Shop";
+		String expectedtitle=ExcelUtility.getStringData(0, 0, "HomePage");
 		Assert.assertEquals(actualtile, expectedtitle, "Title Mismatch");
 	}
 	@Test
 	public void verifyCommunitySelectionPoll()
 	{
-		boolean status=false;
+			
 		driver.get("https://demowebshop.tricentis.com/");
-		List<WebElement> communitypoll=driver.findElements(By.xpath("//input[@type='radio']"));
+		List<WebElement> communitypoll=driver.findElements(By.xpath("//li[@class='answer']"));
 		int size=communitypoll.size();
 		WebElement goodradiobutton=driver.findElement(By.xpath("//input[@id='pollanswers-2']"));
 		
 		for(int i=0;i<size;i++)
-		{
-			if(communitypoll.get(i).equals(goodradiobutton))
-			{
-				goodradiobutton.click();
-				status=goodradiobutton.isSelected();
+		{					
+			String value=communitypoll.get(i).getText();
+			System.out.println(value);
+			if(value.equals("Good"))
+			{				
+				communitypoll.get(i).click();
+				
 			}
+			
 		}
-		
+		boolean status=goodradiobutton.isSelected();
+		 
 		Assert.assertTrue(status,"Radio Button Not Selected");
 		
 	}

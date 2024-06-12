@@ -188,12 +188,10 @@ public class Commands extends BrowserLaunch
 		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
 		WebElement clickmebutton=driver.findElement(By.xpath("//button[@id='timerAlertButton']"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("timerAlertButton")));
-		
 		clickmebutton.click();
 		wait.until(ExpectedConditions.alertIsPresent());
 		Alert alert=driver.switchTo().alert();
-	    alert.accept();
-		
+	    alert.accept();	
 	}
 	@Test
 	public void verifyFleuntWait()
@@ -209,7 +207,6 @@ public class Commands extends BrowserLaunch
 		clickmebutton.click();
 		wait.until(ExpectedConditions.alertIsPresent());
 		Alert alert=driver.switchTo().alert();
-		alert.accept();		
-		
+		alert.accept();			
 	}
 }
