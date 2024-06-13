@@ -14,7 +14,7 @@ import utilities.ExcelUtility;
 
 public class LoginPageTest extends Base
 {
-	@Test(retryAnalyzer=RetryAnalyser.class)
+	@Test(priority=2,retryAnalyzer=RetryAnalyser.class)
 	public void verifyLoginPageTitle() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");
@@ -25,7 +25,7 @@ public class LoginPageTest extends Base
 		String expectedtitle=ExcelUtility.getStringData(0, 0, "LoginPage");
 		Assert.assertEquals(actualtitle, expectedtitle, "Title Mismatch");
 	}
-	@Test
+	@Test(priority=1)
 	public void verifyUserLogin()
 	{
 		try
@@ -51,7 +51,7 @@ public class LoginPageTest extends Base
 		}
 		
 	}
-	@Test(dataProvider="Invalidusercredentials",dataProviderClass=DataProviders.class)
+	@Test(priority=3,dataProvider="Invalidusercredentials",dataProviderClass=DataProviders.class,retryAnalyzer=RetryAnalyser.class)
 	public void verifyUserLoginwithInvalidCredentials(String username,String password)
 	{
 		driver.get("https://demowebshop.tricentis.com/login");
