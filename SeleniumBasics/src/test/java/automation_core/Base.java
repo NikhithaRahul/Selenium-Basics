@@ -13,7 +13,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 public class Base {
 	protected WebDriver driver;
 	public void initialiseBrowser(String browser)
@@ -56,5 +55,4 @@ public class Base {
 		File screenshot=takescreenshot.getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(screenshot,new File("./Screenshot/"+result.getName()+".png"));
 	}
-
 }

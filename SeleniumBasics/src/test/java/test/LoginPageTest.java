@@ -9,11 +9,12 @@ import org.testng.annotations.Test;
 
 import automation_core.Base;
 import dataprovider.DataProviders;
+import listner.RetryAnalyser;
 import utilities.ExcelUtility;
 
 public class LoginPageTest extends Base
 {
-	@Test
+	@Test(retryAnalyzer=RetryAnalyser.class)
 	public void verifyLoginPageTitle() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");

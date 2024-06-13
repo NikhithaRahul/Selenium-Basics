@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import automation_core.Base;
 import utilities.ExcelUtility;
+import utilities.RandomDataUtility;
 
 public class RegisterPagetest extends Base
 {
@@ -29,29 +30,33 @@ public class RegisterPagetest extends Base
 	public void verifyUserRegistration() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");
+		String firstname=RandomDataUtility.getFirstName();
+		String lastname=RandomDataUtility.getLastName();
+		String emailid=firstname+"."+lastname+"@gmail.com";
+		String password=firstname+"."+lastname;
 		WebElement register=driver.findElement(By.xpath("//a[@class='ico-register']"));
 		register.click();
+		
 		WebElement genderradiobutton=driver.findElement(By.xpath("//input[@id='gender-male']"));
 		genderradiobutton.click();
 		WebElement firstnamefield=driver.findElement(By.id("FirstName"));
-		firstnamefield.sendKeys(ExcelUtility.getStringData(0, 0, "RegisterPage"));
+		firstnamefield.sendKeys(firstname);
 		WebElement lastnamefield=driver.findElement(By.id("LastName"));
-		lastnamefield.sendKeys(ExcelUtility.getStringData(0, 1, "RegisterPage"));
+		lastnamefield.sendKeys(lastname);
 		WebElement emailfield=driver.findElement(By.id("Email"));
-		emailfield.sendKeys(ExcelUtility.getStringData(0, 2, "RegisterPage"));
+		emailfield.sendKeys(emailid);
 		WebElement passwordfield=driver.findElement(By.id("Password"));
-		passwordfield.sendKeys(ExcelUtility.getStringData(0, 3, "RegisterPage"));
+		passwordfield.sendKeys(password);
 		WebElement confirmpassword=driver.findElement(By.id("ConfirmPassword"));
-		confirmpassword.sendKeys(ExcelUtility.getStringData(0, 4, "RegisterPage"));
+		confirmpassword.sendKeys(password);
+		
 		WebElement registerbutton=driver.findElement(By.xpath("//input[@id='register-button']"));
 		registerbutton.click();
 		WebElement actualemail=driver.findElement(By.xpath("//div[@class='header-links']//a[@class='account']"));
 		String actual=actualemail.getText();
-		String expectedemail=ExcelUtility.getStringData(0, 2, "RegisterPage");
+		String expectedemail=emailid;
 		Assert.assertEquals(actual, expectedemail, "Registration failed");
-	//	WebElement message=driver.findElement(By.xpath("//div[@class='page-title']//div[@class='result']"));
-	//	String actualmessage=message.getText();
-	//	System.out.println(actualmessage);
+	
 	}
 
 }
