@@ -9,12 +9,12 @@ import org.testng.annotations.Test;
 
 import automation_core.Base;
 import dataprovider.DataProviders;
-import listner.RetryAnalyser;
+import listners.RetryAnalyser;
 import utilities.ExcelUtility;
 
 public class LoginPageTest extends Base
 {
-	@Test(priority=2,retryAnalyzer=RetryAnalyser.class)
+	@Test(priority=2,groups="Sanity",retryAnalyzer=RetryAnalyser.class)
 	public void verifyLoginPageTitle() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");
@@ -25,10 +25,10 @@ public class LoginPageTest extends Base
 		String expectedtitle=ExcelUtility.getStringData(0, 0, "LoginPage");
 		Assert.assertEquals(actualtitle, expectedtitle, "Title Mismatch");
 	}
-	@Test(priority=1)
+	@Test(priority=1,groups={"Smoke","Regression"})
 	public void verifyUserLogin()
 	{
-		try
+		try  
 		{
 		driver.get("https://demowebshop.tricentis.com/");
 		WebElement login=driver.findElement(By.xpath("//a[@class='ico-login']"));
@@ -51,7 +51,7 @@ public class LoginPageTest extends Base
 		}
 		
 	}
-	@Test(priority=3,dataProvider="Invalidusercredentials",dataProviderClass=DataProviders.class,retryAnalyzer=RetryAnalyser.class)
+	@Test(priority=3,groups="Regression",dataProvider="Invalidusercredentials",dataProviderClass=DataProviders.class,retryAnalyzer=RetryAnalyser.class)
 	public void verifyUserLoginwithInvalidCredentials(String username,String password)
 	{
 		driver.get("https://demowebshop.tricentis.com/login");

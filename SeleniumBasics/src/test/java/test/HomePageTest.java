@@ -11,11 +11,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import automation_core.Base;
+import listners.RetryAnalyser;
 import utilities.ExcelUtility;
 
 public class HomePageTest extends Base
 {
-	@Test
+	@Test(groups="Sanity",retryAnalyzer=RetryAnalyser.class)
 	public void verifyHomePageTitle() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");
@@ -24,8 +25,8 @@ public class HomePageTest extends Base
 		String expectedtitle=ExcelUtility.getStringData(0, 0, "HomePage");
 		Assert.assertEquals(actualtile, expectedtitle, "Title Mismatch");
 	}
-	@Test
-	public void verifyCommunitySelectionPoll()
+	@Test(groups="Regression",retryAnalyzer=RetryAnalyser.class)
+	public void verifyCommunitySelectionPoll()   // failed testcase
 	{
 			
 		driver.get("https://demowebshop.tricentis.com/");

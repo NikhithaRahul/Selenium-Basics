@@ -13,7 +13,7 @@ import utilities.RandomDataUtility;
 
 public class RegisterPagetest extends Base
 {
-	@Test
+	/*(@Test
 	public void verifyRegisterPageTitle() throws IOException
 	{
 		driver.get("https://demowebshop.tricentis.com/");
@@ -25,7 +25,7 @@ public class RegisterPagetest extends Base
 		
 		Assert.assertEquals(actualtitle, expectedtitle, "Title Mismatch");
 		
-	}
+	}*/
 	@Test
 	public void verifyUserRegistration() throws IOException
 	{

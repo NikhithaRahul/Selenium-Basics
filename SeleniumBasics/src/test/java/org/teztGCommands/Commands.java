@@ -183,7 +183,8 @@ public class Commands extends BrowserLaunch
 	{
 		driver.get("https://demoqa.com/alerts");
 		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));  //  implicit wait
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));   // explicit wait
+		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10)); 
+		// explicit wait
 		JavascriptExecutor js=(JavascriptExecutor)driver;
 		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
 		WebElement clickmebutton=driver.findElement(By.xpath("//button[@id='timerAlertButton']"));
